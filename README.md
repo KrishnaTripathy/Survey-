@@ -45,9 +45,8 @@ This is the backend part of the Survey Application built with Node.js and Expres
 ## Installation
 
 1. Clone the repository:
-  
-   git clone https://github.com/KrishnaTripathy/Survey-.git
-   cd survey-backend
+   ```bash
+  cd survey-backend
 ## Install the dependencies:
 
 2. npm install
