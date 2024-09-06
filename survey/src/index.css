@@ -1,0 +1,16 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.survey-container {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.welcome-screen, .thank-you-screen {
+  text-align: center;
+}
+
+.navigation-buttons button {
+  margin-right: 10px;
+}
