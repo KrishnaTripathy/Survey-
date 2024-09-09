@@ -1,19 +1,30 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const SurveyQuestion = ({ question, currentStep, totalSteps, handleNext, handlePrevious, handleAnswer, handleSkip }) => {
-  const [selectedOption, setSelectedOption] = useState(null); // Track selected option
+const SurveyQuestion = ({ question, currentStep, totalSteps, handleNext, handlePrevious, handleAnswer, handleSkip, selectedOptions }) => {
+  const [selectedOption, setSelectedOption] = useState(null);
+
+  // Effect to set the selectedOption when moving to a new question
+  useEffect(() => {
+    setSelectedOption(selectedOptions[question.id] || null);
+  }, [currentStep, selectedOptions, question.id]);
 
   const handleOptionClick = (option) => {
     setSelectedOption(option);
-    handleAnswer(question.id, option); // Handle answer selection
+    handleAnswer(question.id, option);
   };
 
   const handleNextClick = () => {
     if (selectedOption || currentStep === totalSteps - 1) {
-      handleNext(); // Proceed to the next question or submit
+      handleNext();
     } else {
-      alert('Please select an option before proceeding.'); // Show alert if no option is selected
+      alert('Please select an option before proceeding.');
     }
+  };
+
+  const handleSkipClick = () => {
+    setSelectedOption(null); // Clear the selected option when skipping
+    handleAnswer(question.id, null); // Ensure answer is reset
+    handleSkip(); // Call the skip handler passed as a prop
   };
 
   return (
@@ -47,7 +58,7 @@ const SurveyQuestion = ({ question, currentStep, totalSteps, handleNext, handleP
             Previous
           </button>
           <button
-            onClick={handleSkip}
+            onClick={handleSkipClick} // Updated handler for skipping
             className="bg-yellow-500 text-white py-2 px-4 rounded-lg hover:bg-yellow-600 focus:outline-none"
           >
             Skip
